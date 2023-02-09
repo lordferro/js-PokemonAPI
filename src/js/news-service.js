@@ -5,14 +5,14 @@ const options = {
     Authorization: API_KEY,
   },
 };
-
+// вынесли логику работы с API в класс
 export default class NewsApiService {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
   }
 
-  fetchArticles() {
+  fetchArticles() {    
     const url = `${BASE_URL}/everything?q=${this.searchQuery}&language=en&pageSize=5&page=${this.page}`;
 
     return fetch(url, options)

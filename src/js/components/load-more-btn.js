@@ -2,6 +2,7 @@ export default class LoadMoreBtn {
   constructor({ selector, hidden = false }) {
     this.refs = this.getRefs(selector);
 
+    // если передать hidden = true вызовется метод hide(), эта запись - вычислене по сокращённой схеме
     hidden && this.hide();
   }
 

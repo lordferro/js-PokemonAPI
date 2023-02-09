@@ -12,36 +12,38 @@
  * http://newsapi.org/v2/everything?q=cat&language=en&pageSize=5&page=1
  */
 
+// 525ac24a30b345fc93a5e4d238eecf81
 import articlesTpl from './templates/articles.hbs';
 import './css/common.css';
+// Импортируем класс
 import NewsApiService from './js/news-service';
 import LoadMoreBtn from './js/components/load-more-btn';
 
 const refs = {
   searchForm: document.querySelector('.js-search-form'),
   articlesContainer: document.querySelector('.js-articles-container'),
+  // loadMoreBtn: document.querySelector('[data-action="load-more"]'),
 };
-const loadMoreBtn = new LoadMoreBtn({
-  selector: '[data-action="load-more"]',
-  hidden: true,
-});
+// создаём экземпляр класса
 const newsApiService = new NewsApiService();
+const loadMoreBtn = new LoadMoreBtn({ selector: '[data-action="load-more"]', hidden: true });
+
 
 refs.searchForm.addEventListener('submit', onSearch);
+// вешаем слушателя
 loadMoreBtn.refs.button.addEventListener('click', fetchArticles);
 
 function onSearch(e) {
   e.preventDefault();
 
+  // используя setter в классе, записываем поисковой запрос. 
   newsApiService.query = e.currentTarget.elements.query.value;
 
-  if (newsApiService.query === '') {
-    return alert('Введи что-то нормальное');
-  }
-
   loadMoreBtn.show();
-  newsApiService.resetPage();
+  
   clearArticlesContainer();
+  // сброс нумерации страниц при новом поиске
+  newsApiService.resetPage();
   fetchArticles();
 }
 
@@ -54,9 +56,9 @@ function fetchArticles() {
 }
 
 function appendArticlesMarkup(articles) {
-  refs.articlesContainer.insertAdjacentHTML('beforeend', articlesTpl(articles));
+  refs.articlesContainer.insertAdjacentHTML('beforeend', articlesTpl(articles))
 }
 
 function clearArticlesContainer() {
-  refs.articlesContainer.innerHTML = '';
+  refs.articlesContainer.innerHTML = "";
 }
